@@ -1,2 +1,29 @@
 {% extends 'travels/base.html' %}
-{% block content %}<h1>Дашборд</h1>{% endblock %}
+{% block content %}
+    <h1>Дашборд</h1>
+    {% if notes %}
+        <div class="row">
+            {% for note in notes %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        {% if note.photo %}
+                            <img src="{{ note.photo.url }}"
+                                 alt="{{ note.place_name }}"
+                                 class="card-img-top">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ note.place_name }}</h5>
+                            <p class="card-text">{{ note.country }} - {{ note.trip_date }}</p>
+                            <a href="{% url 'note_detail' note.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="" class="btn btn-secondary">Перейти к дашборду</a>
+    {% else %}
+        <p>
+            Задание еще не доделано<a href=""></a>.
+        </p>
+    {% endif %}
+{% endblock %}

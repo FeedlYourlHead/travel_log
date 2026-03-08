@@ -1,0 +1,8 @@
+{% extends 'travels/base.html' %}
+{% block content %}
+    <h1>{{ note.place_name }}</h1>
+    <p>{{ note.country }}</p>
+    <p>{{ note.trip_date }}</p>
+    {% if note.photo %}<img src="{{ note.photo.url }}" alt="{{ note.place_name }}">{% endif %}
+    <p>{{ note.description }}</p>
+{% endblock %}

@@ -9,5 +9,15 @@ def home(request):
     return render(request, 'travels/home.html')
 
 def dashboard(request):
-    return render(request, 'travels/dashboard.html')
+    notes = TravelNote.objects.filter(author=request.user).order_by('created_at')
+    return render(request, 'travels/dashboard.html', context={'notes': notes})
+
+def register(request):
+    pass
+
+def login(request):
+    pass
+
+def detail(request):
+    pass
 
