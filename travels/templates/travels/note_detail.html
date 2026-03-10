@@ -1,8 +1,26 @@
 {% extends 'travels/base.html' %}
 {% block content %}
-    <h1>{{ note.place_name }}</h1>
-    <p>{{ note.country }}</p>
-    <p>{{ note.trip_date }}</p>
-    {% if note.photo %}<img src="{{ note.photo.url }}" alt="{{ note.place_name }}">{% endif %}
-    <p>{{ note.description }}</p>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                {% if note.photo %}
+                    <img src="{{ note.photo.url }}"
+                         class="card-img-top img-fluid"
+                         alt="{{ note.place_name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h1 class="card-title">{{ note.place_name }}</h1>
+                    <h5 class="text-muted mb-3">{{ note.country }} • {{ note.date_of_trip }}</h5>
+                    <p class="card-text">{{ note.description|linebreaks }}</p>
+                    <p class="text-muted small">Добавлено: {{ note.created_at }}</p>
+                    <div class="mt-4">
+                        <a href="{% url 'travels:update_note' note.id %}"
+                           class="btn btn-warning">Редактировать</a>
+                        <a href="{% url 'travels:delete_note' note.id %}" class="btn btn-danger">Удалить</a>
+                        <a href="{% url 'travels:dashboard' %}" class="btn btn-secondary">Назад к списку</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

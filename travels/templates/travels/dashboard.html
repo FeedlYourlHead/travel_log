@@ -1,29 +1,38 @@
 {% extends 'travels/base.html' %}
 {% block content %}
-    <h1>Дашборд</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Мои поездки</h1>
+        <a href="{% url 'travels:create_note' %}" class="btn btn-primary">+ Добавить поездку</a>
+    </div>
     {% if notes %}
         <div class="row">
             {% for note in notes %}
                 <div class="col-md-4 mb-3">
-                    <div class="card">
+                    <div class="card h-100">
                         {% if note.photo %}
                             <img src="{{ note.photo.url }}"
                                  alt="{{ note.place_name }}"
-                                 class="card-img-top">
+                                 class="card-img-top"
+                                 style="height: 200px;
+                                        object-fit: cover">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ note.place_name }}</h5>
-                            <p class="card-text">{{ note.country }} - {{ note.trip_date }}</p>
-                            <a href="{% url 'note_detail' note.pk %}" class="btn btn-primary">Подробнее</a>
+                            <p class="card-text">{{ note.country }} - {{ note.date_of_trip }}</p>
+                            <a href="{% url 'travels:detail' note.id %}" class="btn btn-primary">Подробнее</a>
+                            <a href="{% url 'travels:update_note' note.id %}"
+                               class="btn btn-sm btn-warning">✏️</a>
+                            <a href="{% url 'travels:delete_note' note.id %}"
+                               class="btn btn-sm btn-danger">🗑️</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-        <a href="" class="btn btn-secondary">Перейти к дашборду</a>
     {% else %}
-        <p>
-            Задание еще не доделано<a href=""></a>.
-        </p>
+        <div class="text-center py-5">
+            <p class="lead">У вас пока нет записей о поездках.</p>
+            <a href="{% url 'travels:create_note' %}" class="btn btn-primary btn-lg">Добавить первую поездку</a>
+        </div>
     {% endif %}
 {% endblock %}

@@ -6,33 +6,39 @@
             <div class="row">
                 {% for note in notes %}
                     <div class="col-md-4 mb-3">
-                        <div class="card">
+                        <div class="card h-100">
                             {% if note.photo %}
                                 <img src="{{ note.photo.url }}"
                                      alt="{{ note.place_name }}"
-                                     class="card-img-top">
+                                     class="card-img-top"
+                                     style="height: 200px;
+                                            object-fit: cover">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ note.place_name }}</h5>
-                                <p class="card-text">{{ note.country }} - {{ note.trip_date }}</p>
-                                <a href="{% url 'note_detail' note.pk %}" class="btn btn-primary">Подробнее</a>
+                                <p class="card-text">{{ note.country }} - {{ note.date_of_trip }}</p>
+                                <a href="{% url 'travels:detail' note.id %}" class="btn btn-primary">Подробнее</a>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            <a href="" class="btn btn-secondary">Перейти к дашборду</a>
+            <a href="{% url 'travels:dashboard' %}" class="btn btn-secondary">Все поездки</a>
         {% else %}
             <p>
-                Задание еще не доделано<a href=""></a>.
+                У вас пока нет записей о поездках.
+                <a href="{% url 'travels:create_note' %}">Добавьте первую поездку!</a>
             </p>
         {% endif %}
     {% else %}
-        <div class="text-center">
-            <h1>Добро пожаловать в TravelLog</h1>
-            <p>Ведите личный журнал путешествий с описаниями и фотографиями.</p>
-            <a href="" class="btn btn-primary">Войти</a>
-            <a href="" class="btn btn-outline">Зарегистрироваться</a>
+        <div class="text-center py-5">
+            <h1 class="display-4">Добро пожаловать в TravelLog</h1>
+            <p class="lead">Ведите личный журнал путешествий с описаниями и фотографиями.</p>
+            <div class="mt-4">
+                <a href="{% url 'travels:login' %}" class="btn btn-primary btn-lg">Войти</a>
+                <a href="{% url 'travels:register' %}"
+                   class="btn btn-outline-primary btn-lg">Зарегистрироваться</a>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
